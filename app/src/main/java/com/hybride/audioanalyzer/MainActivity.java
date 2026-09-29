@@ -9,6 +9,7 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
     private static final int FILE_CHOOSER_REQUEST = 1001;
@@ -26,6 +27,20 @@ public class MainActivity extends Activity {
         s.setAllowFileAccess(true);
         s.setAllowContentAccess(true);
         s.setDomStorageEnabled(true);
+
+        web.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                String js = "(function(){" +
+                        "document.body.innerHTML=document.body.innerHTML" +
+                        ".replace(/Xilica EQ analizi/g,'parametrik EQ analizi')" +
+                        ".replace(/Önerilen Xilica EQ/g,'Önerilen Parametrik EQ')" +
+                        ".replace(/Xilica/g,'');" +
+                        "})();";
+                view.evaluateJavascript(js, null);
+            }
+        });
 
         web.setWebChromeClient(new WebChromeClient() {
             @Override
