@@ -5,26 +5,74 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Hybride Audio Analyzer</title>
 <style>
-:root{--bg:#081018;--card:#101b27;--card2:#152433;--line:#22384a;--text:#f7fbff;--muted:#9fb0c0;--accent:#41df82;--accent2:#1fb66a;--warn:#ffd166;--danger:#ff8b8b}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:linear-gradient(180deg,#071019 0%,#0b1520 100%);color:var(--text);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}body{font-size:16px}.app{width:100%;max-width:480px;margin:0 auto;padding:18px 14px 32px}.top{display:flex;align-items:center;gap:12px;padding:4px 2px 18px}.logo{width:52px;height:52px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#052311;font-weight:900;font-size:19px;box-shadow:0 10px 28px #20bb6b33}.title h1{font-size:23px;line-height:1.15;margin:0 0 4px}.title p{margin:0;color:var(--muted);font-size:13px}.card{background:linear-gradient(180deg,var(--card),#0d1721);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 14px 40px #0005}.step{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--accent);text-transform:uppercase;margin-bottom:8px}.headline{font-size:20px;font-weight:850;margin:0 0 7px}.desc{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 16px}.picker{display:block;border:1.5px dashed #44627a;border-radius:18px;padding:24px 16px;text-align:center;background:#0b151f;cursor:pointer}.picker .icon{font-size:30px;margin-bottom:8px}.picker b{display:block;font-size:17px;margin-bottom:4px}.picker span{font-size:13px;color:var(--muted)}input[type=file]{display:none}.previewWrap{display:none;margin-top:14px}.previewWrap img,.previewWrap video{width:100%;max-height:360px;object-fit:contain;border-radius:16px;border:1px solid var(--line);background:#05090d}.fileInfo{margin-top:9px;color:var(--muted);font-size:13px;word-break:break-word}.btn{width:100%;border:0;border-radius:16px;min-height:54px;padding:15px 18px;font-size:16px;font-weight:900;cursor:pointer}.primary{margin-top:14px;background:linear-gradient(135deg,var(--accent),#2bca73);color:#062113;box-shadow:0 10px 24px #27c87230}.secondary{margin-top:10px;background:#1a2a38;color:#eef7ff;border:1px solid #29445a}.status{display:flex;align-items:center;gap:9px;margin-top:13px;color:var(--muted);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:#607181}.dot.ok{background:var(--accent);box-shadow:0 0 0 4px #41df8218}.results{display:none}.scoreBox{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);border-radius:17px;padding:14px;margin-bottom:12px}.scoreBox small{display:block;color:var(--muted);margin-bottom:4px}.scoreBox strong{font-size:28px}.badge{padding:8px 10px;border-radius:999px;background:#153724;color:#94f5bb;font-size:12px;font-weight:850}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:13px}.metric small{display:block;color:var(--muted);font-size:12px;margin-bottom:6px}.metric b{font-size:16px}.eq{margin-top:14px}.eq h3{font-size:16px;margin:0 0 10px}.row{display:grid;grid-template-columns:1.2fr .9fr .7fr;gap:8px;padding:11px 2px;border-bottom:1px solid #203242;font-size:14px}.row.head{color:var(--muted);font-size:12px}.good{color:#95efb7}.warn{color:var(--warn)}.bad{color:#ffb1b1}.note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:14px 0 0}.footer{text-align:center;color:#647787;font-size:11px;padding:6px 0 0}@media(max-width:360px){.app{padding-left:10px;padding-right:10px}.title h1{font-size:20px}.grid{grid-template-columns:1fr}.card{padding:15px}.headline{font-size:18px}}
+:root{
+  --navy:#10283f;
+  --navy2:#183a58;
+  --blue:#216b9a;
+  --blue2:#2f7fad;
+  --bg:#f3f6f8;
+  --card:#ffffff;
+  --line:#d7e0e7;
+  --text:#14212c;
+  --muted:#647482;
+  --soft:#eef3f6;
+  --ok:#287c5a;
+  --warn:#a96f17;
+  --bad:#aa3f3f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+body{font-size:16px}
+.app{width:100%;max-width:500px;margin:0 auto;padding:0 14px 28px}
+.header{margin:0 -14px 18px;background:var(--navy);color:#fff;padding:20px 18px 18px;border-bottom:4px solid var(--blue2)}
+.brandline{font-size:12px;letter-spacing:.18em;font-weight:800;opacity:.78;margin-bottom:7px}
+.header h1{font-size:25px;line-height:1.15;margin:0 0 5px;font-weight:800}
+.header p{font-size:13px;line-height:1.45;margin:0;color:#d6e1e9}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,40,63,.06)}
+.sectionTag{display:flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.sectionTag:before{content:"";width:18px;height:3px;background:var(--blue);border-radius:4px}
+.headline{font-size:20px;line-height:1.25;font-weight:780;margin:0 0 7px;color:var(--navy)}
+.desc{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 16px}
+.picker{display:block;border:1px dashed #98aebb;border-radius:10px;padding:22px 15px;text-align:center;background:#f8fafb;cursor:pointer}
+.pickerIcon{width:44px;height:44px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--blue);font-size:25px;font-weight:500}
+.picker b{display:block;font-size:16px;color:var(--navy);margin-bottom:5px}.picker span{font-size:12.5px;color:var(--muted)}
+input[type=file]{display:none}
+.previewWrap{display:none;margin-top:14px}.previewWrap img,.previewWrap video{width:100%;max-height:360px;object-fit:contain;border-radius:9px;border:1px solid var(--line);background:#0a0d10}
+.fileInfo{margin-top:8px;padding:9px 10px;background:var(--soft);border-radius:7px;color:var(--muted);font-size:12px;word-break:break-word}
+.btn{width:100%;border-radius:8px;min-height:52px;padding:14px 18px;font-size:15px;font-weight:800;letter-spacing:.02em;cursor:pointer}
+.primary{margin-top:14px;background:var(--blue);color:#fff;border:1px solid var(--blue)}
+.primary:active{background:#19577f}.secondary{margin-top:12px;background:#fff;color:var(--navy);border:1px solid #9fb0bd}
+.status{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid #edf1f3;color:var(--muted);font-size:13px}
+.dot{width:9px;height:9px;border-radius:50%;background:#9aa8b2}.dot.ok{background:var(--ok)}
+.results{display:none}
+.summary{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.summaryTop{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 15px;background:var(--navy);color:#fff}
+.summaryTop small{display:block;color:#c4d2dc;margin-bottom:3px}.summaryTop strong{font-size:26px}.badge{font-size:11px;font-weight:800;padding:7px 9px;border:1px solid #7392a8;border-radius:999px;color:#eaf2f7;white-space:nowrap}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{background:#f8fafb;border:1px solid var(--line);border-radius:9px;padding:12px}.metric small{display:block;color:var(--muted);font-size:11.5px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}.metric b{font-size:15px;color:var(--navy)}.metric b.good{color:var(--ok)}.metric b.warn{color:var(--warn)}.metric b.bad{color:var(--bad)}
+.eq{margin-top:17px}.eqTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.eq h3{font-size:16px;color:var(--navy);margin:0}.eqHint{font-size:11px;color:var(--muted)}
+.table{border:1px solid var(--line);border-radius:9px;overflow:hidden}.row{display:grid;grid-template-columns:1.2fr .9fr .7fr;gap:8px;padding:11px 12px;border-bottom:1px solid #e5ebef;font-size:13.5px;background:#fff}.row:last-child{border-bottom:0}.row.head{background:var(--soft);color:var(--muted);font-size:11.5px;font-weight:700;text-transform:uppercase}
+.note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:14px 0 0;padding:11px 12px;background:#f7f9fa;border-left:3px solid #9fb0bd;border-radius:6px}
+.footer{text-align:center;color:#7b8994;font-size:10.5px;padding:5px 0 0;letter-spacing:.04em}
+@media(max-width:360px){.app{padding-left:10px;padding-right:10px}.header{margin-left:-10px;margin-right:-10px}.header h1{font-size:22px}.grid{grid-template-columns:1fr}.card{padding:15px}}
 </style>
 </head>
 <body>
 <main class="app">
-  <header class="top">
-    <div class="logo">HA</div>
-    <div class="title"><h1>Hybride Audio Analyzer</h1><p>Speech EQ & RTA Assistant</p></div>
+  <header class="header">
+    <div class="brandline">HYBRIDE TEKNOLOJİ</div>
+    <h1>Audio Analyzer</h1>
+    <p>Ses sistemi ölçüm, konuşma profili ve Xilica EQ destek aracı</p>
   </header>
 
   <section class="card">
-    <div class="step">Adım 1</div>
-    <h2 class="headline">Ölçüm dosyanı seç</h2>
-    <p class="desc">RTA ekran görüntüsü veya kısa bir video seçebilirsin. Dosya telefondan doğrudan açılır.</p>
+    <div class="sectionTag">Ölçüm Girişi</div>
+    <h2 class="headline">RTA ölçümünü yükle</h2>
+    <p class="desc">RTA ekran görüntüsü veya kısa ölçüm videosu seç. Dosya telefonundan doğrudan açılır.</p>
 
     <label class="picker" for="file">
-      <div class="icon">＋</div>
+      <div class="pickerIcon">+</div>
       <b>Fotoğraf veya video seç</b>
-      <span>JPG, PNG, MP4 ve desteklenen diğer medya türleri</span>
+      <span>JPG, PNG, MP4 ve cihazının desteklediği medya türleri</span>
     </label>
     <input id="file" type="file" accept="image/*,video/*">
 
@@ -34,14 +82,20 @@
       <div id="fileInfo" class="fileInfo"></div>
     </div>
 
-    <button id="analyze" class="btn primary">ANALİZ ET</button>
-    <div class="status"><span id="dot" class="dot"></span><span id="st">Dosya bekleniyor</span></div>
+    <button id="analyze" class="btn primary">ÖLÇÜMÜ ANALİZ ET</button>
+    <div class="status"><span id="dot" class="dot"></span><span id="st">Ölçüm dosyası bekleniyor</span></div>
   </section>
 
   <section id="results" class="card results">
-    <div class="step">Adım 2</div>
-    <h2 class="headline">Analiz sonucu</h2>
-    <div class="scoreBox"><div><small>Konuşma profili</small><strong>İyi</strong></div><div class="badge">Örnek Analiz</div></div>
+    <div class="sectionTag">Teknik Sonuç</div>
+    <h2 class="headline">Analiz özeti</h2>
+
+    <div class="summary">
+      <div class="summaryTop">
+        <div><small>Konuşma profili</small><strong>İyi</strong></div>
+        <div class="badge">DEMO SONUÇ</div>
+      </div>
+    </div>
 
     <div class="grid">
       <div class="metric"><small>HPF</small><b>100 Hz</b></div>
@@ -51,19 +105,21 @@
     </div>
 
     <div class="eq">
-      <h3>Önerilen Xilica EQ</h3>
-      <div class="row head"><div>Frekans</div><div>Kazanç</div><div>Q</div></div>
-      <div class="row"><div>250 Hz</div><div>-1.5 dB</div><div>1.20</div></div>
-      <div class="row"><div>500 Hz</div><div>-2.5 dB</div><div>1.40</div></div>
-      <div class="row"><div>3.15 kHz</div><div>+1.0 dB</div><div>1.00</div></div>
-      <div class="row"><div>8.0 kHz</div><div>-2.0 dB</div><div>1.30</div></div>
+      <div class="eqTitle"><h3>Önerilen Xilica EQ</h3><span class="eqHint">Parametrik EQ</span></div>
+      <div class="table">
+        <div class="row head"><div>Frekans</div><div>Kazanç</div><div>Q</div></div>
+        <div class="row"><div>250 Hz</div><div>-1.5 dB</div><div>1.20</div></div>
+        <div class="row"><div>500 Hz</div><div>-2.5 dB</div><div>1.40</div></div>
+        <div class="row"><div>3.15 kHz</div><div>+1.0 dB</div><div>1.00</div></div>
+        <div class="row"><div>8.0 kHz</div><div>-2.0 dB</div><div>1.30</div></div>
+      </div>
     </div>
 
-    <p class="note"><b>Not:</b> Bu sürümde arayüz, fotoğraf/video seçimi ve önizleme çalışır. Gösterilen EQ sonuçları henüz örnektir; gerçek ölçüm analizi sonraki aşamada bağlanacaktır.</p>
-    <button class="btn secondary" onclick="resetApp()">YENİ ÖLÇÜM</button>
+    <p class="note"><b>Bilgi:</b> Bu sürümde dosya seçimi, video/fotoğraf önizleme ve kurumsal mobil arayüz çalışır. EQ değerleri henüz gerçek ölçüm motoruna bağlı değildir.</p>
+    <button class="btn secondary" onclick="resetApp()">YENİ ÖLÇÜM BAŞLAT</button>
   </section>
 
-  <div class="footer">Hybride Teknoloji • Mobil teknik servis aracı</div>
+  <div class="footer">HYBRIDE TEKNOLOJİ • MOBİL TEKNİK SERVİS</div>
 </main>
 <script>
 const file=document.getElementById('file');
@@ -91,11 +147,11 @@ file.onchange=e=>{
   if(f.type.startsWith('video/')){
     videoPreview.src=objectUrl;
     videoPreview.style.display='block';
-    st.textContent='Video yüklendi';
+    st.textContent='Video hazır';
   }else{
     imagePreview.src=objectUrl;
     imagePreview.style.display='block';
-    st.textContent='Görsel yüklendi';
+    st.textContent='Görsel hazır';
   }
   fileInfo.textContent=f.name;
   dot.classList.add('ok');
@@ -103,8 +159,8 @@ file.onchange=e=>{
 };
 
 document.getElementById('analyze').onclick=()=>{
-  if(!file.files.length){st.textContent='Önce fotoğraf veya video seç';return;}
-  st.textContent='Analiz tamamlandı';
+  if(!file.files.length){st.textContent='Önce bir ölçüm dosyası seç';return;}
+  st.textContent='Demo analiz tamamlandı';
   results.style.display='block';
   setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),60);
 };
@@ -117,7 +173,7 @@ function resetApp(){
   videoPreview.style.display='none';
   results.style.display='none';
   fileInfo.textContent='';
-  st.textContent='Dosya bekleniyor';
+  st.textContent='Ölçüm dosyası bekleniyor';
   dot.classList.remove('ok');
   window.scrollTo({top:0,behavior:'smooth'});
 }
