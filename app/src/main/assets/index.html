@@ -5,178 +5,27 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Hybride Audio Analyzer</title>
 <style>
-:root{
-  --navy:#10283f;
-  --navy2:#183a58;
-  --blue:#216b9a;
-  --blue2:#2f7fad;
-  --bg:#f3f6f8;
-  --card:#ffffff;
-  --line:#d7e0e7;
-  --text:#14212c;
-  --muted:#647482;
-  --soft:#eef3f6;
-  --ok:#287c5a;
-  --warn:#a96f17;
-  --bad:#aa3f3f;
-}
-*{box-sizing:border-box}
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-body{font-size:16px}
-.app{width:100%;max-width:500px;margin:0 auto;padding:0 14px 28px}
-.header{margin:0 -14px 18px;background:var(--navy);color:#fff;padding:20px 18px 18px;border-bottom:4px solid var(--blue2)}
-.brandline{font-size:12px;letter-spacing:.18em;font-weight:800;opacity:.78;margin-bottom:7px}
-.header h1{font-size:25px;line-height:1.15;margin:0 0 5px;font-weight:800}
-.header p{font-size:13px;line-height:1.45;margin:0;color:#d6e1e9}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,40,63,.06)}
-.sectionTag{display:flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-.sectionTag:before{content:"";width:18px;height:3px;background:var(--blue);border-radius:4px}
-.headline{font-size:20px;line-height:1.25;font-weight:780;margin:0 0 7px;color:var(--navy)}
-.desc{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 16px}
-.picker{display:block;border:1px dashed #98aebb;border-radius:10px;padding:22px 15px;text-align:center;background:#f8fafb;cursor:pointer}
-.pickerIcon{width:44px;height:44px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--blue);font-size:25px;font-weight:500}
-.picker b{display:block;font-size:16px;color:var(--navy);margin-bottom:5px}.picker span{font-size:12.5px;color:var(--muted)}
-input[type=file]{display:none}
-.previewWrap{display:none;margin-top:14px}.previewWrap img,.previewWrap video{width:100%;max-height:360px;object-fit:contain;border-radius:9px;border:1px solid var(--line);background:#0a0d10}
-.fileInfo{margin-top:8px;padding:9px 10px;background:var(--soft);border-radius:7px;color:var(--muted);font-size:12px;word-break:break-word}
-.btn{width:100%;border-radius:8px;min-height:52px;padding:14px 18px;font-size:15px;font-weight:800;letter-spacing:.02em;cursor:pointer}
-.primary{margin-top:14px;background:var(--blue);color:#fff;border:1px solid var(--blue)}
-.primary:active{background:#19577f}.secondary{margin-top:12px;background:#fff;color:var(--navy);border:1px solid #9fb0bd}
-.status{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid #edf1f3;color:var(--muted);font-size:13px}
-.dot{width:9px;height:9px;border-radius:50%;background:#9aa8b2}.dot.ok{background:var(--ok)}
-.results{display:none}
-.summary{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
-.summaryTop{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 15px;background:var(--navy);color:#fff}
-.summaryTop small{display:block;color:#c4d2dc;margin-bottom:3px}.summaryTop strong{font-size:26px}.badge{font-size:11px;font-weight:800;padding:7px 9px;border:1px solid #7392a8;border-radius:999px;color:#eaf2f7;white-space:nowrap}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{background:#f8fafb;border:1px solid var(--line);border-radius:9px;padding:12px}.metric small{display:block;color:var(--muted);font-size:11.5px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}.metric b{font-size:15px;color:var(--navy)}.metric b.good{color:var(--ok)}.metric b.warn{color:var(--warn)}.metric b.bad{color:var(--bad)}
-.eq{margin-top:17px}.eqTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.eq h3{font-size:16px;color:var(--navy);margin:0}.eqHint{font-size:11px;color:var(--muted)}
-.table{border:1px solid var(--line);border-radius:9px;overflow:hidden}.row{display:grid;grid-template-columns:1.2fr .9fr .7fr;gap:8px;padding:11px 12px;border-bottom:1px solid #e5ebef;font-size:13.5px;background:#fff}.row:last-child{border-bottom:0}.row.head{background:var(--soft);color:var(--muted);font-size:11.5px;font-weight:700;text-transform:uppercase}
-.note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:14px 0 0;padding:11px 12px;background:#f7f9fa;border-left:3px solid #9fb0bd;border-radius:6px}
-.footer{text-align:center;color:#7b8994;font-size:10.5px;padding:5px 0 0;letter-spacing:.04em}
-@media(max-width:360px){.app{padding-left:10px;padding-right:10px}.header{margin-left:-10px;margin-right:-10px}.header h1{font-size:22px}.grid{grid-template-columns:1fr}.card{padding:15px}}
+:root{--navy:#10283f;--navy2:#183a58;--blue:#216b9a;--blue2:#2f7fad;--bg:#f3f6f8;--card:#fff;--line:#d7e0e7;--text:#14212c;--muted:#647482;--soft:#eef3f6;--ok:#287c5a;--warn:#a96f17;--bad:#aa3f3f}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}body{font-size:16px}.app{width:100%;max-width:500px;margin:0 auto;padding:0 14px 28px}.header{margin:0 -14px 18px;background:var(--navy);color:#fff;padding:20px 18px 18px;border-bottom:4px solid var(--blue2)}.brandline{font-size:12px;letter-spacing:.18em;font-weight:800;opacity:.78;margin-bottom:7px}.header h1{font-size:25px;line-height:1.15;margin:0 0 5px;font-weight:800}.header p{font-size:13px;line-height:1.45;margin:0;color:#d6e1e9}.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(16,40,63,.06)}.sectionTag{display:flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}.sectionTag:before{content:"";width:18px;height:3px;background:var(--blue);border-radius:4px}.headline{font-size:20px;line-height:1.25;font-weight:780;margin:0 0 7px;color:var(--navy)}.desc{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 16px}.picker{display:block;border:1px dashed #98aebb;border-radius:10px;padding:22px 15px;text-align:center;background:#f8fafb;cursor:pointer}.pickerIcon{width:44px;height:44px;margin:0 auto 10px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--blue);font-size:25px}.picker b{display:block;font-size:16px;color:var(--navy);margin-bottom:5px}.picker span{font-size:12.5px;color:var(--muted)}input[type=file]{display:none}.previewWrap{display:none;margin-top:14px}.previewWrap img,.previewWrap video{width:100%;max-height:360px;object-fit:contain;border-radius:9px;border:1px solid var(--line);background:#0a0d10}.fileInfo{margin-top:8px;padding:9px 10px;background:var(--soft);border-radius:7px;color:var(--muted);font-size:12px;word-break:break-word}.btn{width:100%;border-radius:8px;min-height:52px;padding:14px 18px;font-size:15px;font-weight:800;letter-spacing:.02em;cursor:pointer}.primary{margin-top:14px;background:var(--blue);color:#fff;border:1px solid var(--blue)}.secondary{margin-top:12px;background:#fff;color:var(--navy);border:1px solid #9fb0bd}.status{display:flex;align-items:center;gap:9px;margin-top:12px;padding-top:12px;border-top:1px solid #edf1f3;color:var(--muted);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:#9aa8b2}.dot.ok{background:var(--ok)}.results{display:none}.summary{border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}.summaryTop{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 15px;background:var(--navy);color:#fff}.summaryTop small{display:block;color:#c4d2dc;margin-bottom:3px}.summaryTop strong{font-size:26px}.badge{font-size:11px;font-weight:800;padding:7px 9px;border:1px solid #7392a8;border-radius:999px;color:#eaf2f7;white-space:nowrap}.grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{background:#f8fafb;border:1px solid var(--line);border-radius:9px;padding:12px}.metric small{display:block;color:var(--muted);font-size:11.5px;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}.metric b{font-size:15px;color:var(--navy)}.good{color:var(--ok)!important}.warn{color:var(--warn)!important}.bad{color:var(--bad)!important}.eq{margin-top:17px}.eqTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.eq h3{font-size:16px;color:var(--navy);margin:0}.eqHint{font-size:11px;color:var(--muted)}.table{border:1px solid var(--line);border-radius:9px;overflow:hidden}.row{display:grid;grid-template-columns:1.2fr .9fr .7fr;gap:8px;padding:11px 12px;border-bottom:1px solid #e5ebef;font-size:13.5px;background:#fff}.row:last-child{border-bottom:0}.row.head{background:var(--soft);color:var(--muted);font-size:11.5px;font-weight:700;text-transform:uppercase}.note{font-size:12.5px;line-height:1.55;color:var(--muted);margin:14px 0 0;padding:11px 12px;background:#f7f9fa;border-left:3px solid #9fb0bd;border-radius:6px}.footer{text-align:center;color:#7b8994;font-size:10.5px;padding:5px 0 0;letter-spacing:.04em}canvas{display:none}@media(max-width:360px){.app{padding-left:10px;padding-right:10px}.header{margin-left:-10px;margin-right:-10px}.header h1{font-size:22px}.grid{grid-template-columns:1fr}.card{padding:15px}}
 </style>
 </head>
 <body>
 <main class="app">
-  <header class="header">
-    <div class="brandline">HYBRIDE TEKNOLOJİ</div>
-    <h1>Audio Analyzer</h1>
-    <p>Ses sistemi ölçüm, konuşma profili ve Xilica EQ destek aracı</p>
-  </header>
-
-  <section class="card">
-    <div class="sectionTag">Ölçüm Girişi</div>
-    <h2 class="headline">RTA ölçümünü yükle</h2>
-    <p class="desc">RTA ekran görüntüsü veya kısa ölçüm videosu seç. Dosya telefonundan doğrudan açılır.</p>
-
-    <label class="picker" for="file">
-      <div class="pickerIcon">+</div>
-      <b>Fotoğraf veya video seç</b>
-      <span>JPG, PNG, MP4 ve cihazının desteklediği medya türleri</span>
-    </label>
-    <input id="file" type="file" accept="image/*,video/*">
-
-    <div id="previewWrap" class="previewWrap">
-      <img id="imagePreview" alt="Seçilen görsel" style="display:none">
-      <video id="videoPreview" controls playsinline style="display:none"></video>
-      <div id="fileInfo" class="fileInfo"></div>
-    </div>
-
-    <button id="analyze" class="btn primary">ÖLÇÜMÜ ANALİZ ET</button>
-    <div class="status"><span id="dot" class="dot"></span><span id="st">Ölçüm dosyası bekleniyor</span></div>
-  </section>
-
-  <section id="results" class="card results">
-    <div class="sectionTag">Teknik Sonuç</div>
-    <h2 class="headline">Analiz özeti</h2>
-
-    <div class="summary">
-      <div class="summaryTop">
-        <div><small>Konuşma profili</small><strong>İyi</strong></div>
-        <div class="badge">DEMO SONUÇ</div>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="metric"><small>HPF</small><b>100 Hz</b></div>
-      <div class="metric"><small>Feedback Riski</small><b class="warn">Orta</b></div>
-      <div class="metric"><small>Boğukluk</small><b class="bad">Biraz fazla</b></div>
-      <div class="metric"><small>Netlik</small><b class="good">İyi</b></div>
-    </div>
-
-    <div class="eq">
-      <div class="eqTitle"><h3>Önerilen Xilica EQ</h3><span class="eqHint">Parametrik EQ</span></div>
-      <div class="table">
-        <div class="row head"><div>Frekans</div><div>Kazanç</div><div>Q</div></div>
-        <div class="row"><div>250 Hz</div><div>-1.5 dB</div><div>1.20</div></div>
-        <div class="row"><div>500 Hz</div><div>-2.5 dB</div><div>1.40</div></div>
-        <div class="row"><div>3.15 kHz</div><div>+1.0 dB</div><div>1.00</div></div>
-        <div class="row"><div>8.0 kHz</div><div>-2.0 dB</div><div>1.30</div></div>
-      </div>
-    </div>
-
-    <p class="note"><b>Bilgi:</b> Bu sürümde dosya seçimi, video/fotoğraf önizleme ve kurumsal mobil arayüz çalışır. EQ değerleri henüz gerçek ölçüm motoruna bağlı değildir.</p>
-    <button class="btn secondary" onclick="resetApp()">YENİ ÖLÇÜM BAŞLAT</button>
-  </section>
-
-  <div class="footer">HYBRIDE TEKNOLOJİ • MOBİL TEKNİK SERVİS</div>
-</main>
+<header class="header"><div class="brandline">HYBRIDE TEKNOLOJİ</div><h1>Audio Analyzer</h1><p>RTA ekran görüntüsünden göreli konuşma profili ve Xilica EQ analizi</p></header>
+<section class="card"><div class="sectionTag">Ölçüm Girişi</div><h2 class="headline">RTA ölçümünü yükle</h2><p class="desc">RTA grafiğinin mümkün olduğunca büyük ve net göründüğü ekran görüntüsünü seç. Video seçersen ekranda görünen kare analiz edilir.</p><label class="picker" for="file"><div class="pickerIcon">+</div><b>Fotoğraf veya video seç</b><span>JPG, PNG, MP4 ve cihazının desteklediği medya türleri</span></label><input id="file" type="file" accept="image/*,video/*"><div id="previewWrap" class="previewWrap"><img id="imagePreview" alt="Seçilen görsel" style="display:none"><video id="videoPreview" controls playsinline style="display:none"></video><div id="fileInfo" class="fileInfo"></div></div><button id="analyze" class="btn primary">ÖLÇÜMÜ ANALİZ ET</button><div class="status"><span id="dot" class="dot"></span><span id="st">Ölçüm dosyası bekleniyor</span></div></section>
+<section id="results" class="card results"><div class="sectionTag">Teknik Sonuç</div><h2 class="headline">Analiz özeti</h2><div class="summary"><div class="summaryTop"><div><small>Konuşma profili</small><strong id="profile">—</strong></div><div id="confidence" class="badge">GÜVEN —</div></div></div><div class="grid"><div class="metric"><small>HPF Önerisi</small><b id="hpf">—</b></div><div class="metric"><small>Feedback Riski</small><b id="feedback">—</b></div><div class="metric"><small>Boğukluk</small><b id="mud">—</b></div><div class="metric"><small>Netlik</small><b id="clarity">—</b></div></div><div class="eq"><div class="eqTitle"><h3>Önerilen Xilica EQ</h3><span class="eqHint">Göreli parametrik kesimler</span></div><div id="eqTable" class="table"><div class="row head"><div>Frekans</div><div>Kazanç</div><div>Q</div></div></div></div><p id="note" class="note"><b>Bilgi:</b> Analiz hazırlanıyor.</p><button class="btn secondary" onclick="resetApp()">YENİ ÖLÇÜM BAŞLAT</button></section>
+<canvas id="work"></canvas><div class="footer">HYBRIDE TEKNOLOJİ • MOBİL TEKNİK SERVİS</div></main>
 <script>
-const file=document.getElementById('file');
-const imagePreview=document.getElementById('imagePreview');
-const videoPreview=document.getElementById('videoPreview');
-const previewWrap=document.getElementById('previewWrap');
-const fileInfo=document.getElementById('fileInfo');
-const results=document.getElementById('results');
-const st=document.getElementById('st');
-const dot=document.getElementById('dot');
-let objectUrl=null;
-
-file.onchange=e=>{
-  const f=e.target.files && e.target.files[0];
-  if(!f)return;
-  if(objectUrl) URL.revokeObjectURL(objectUrl);
-  objectUrl=URL.createObjectURL(f);
-  previewWrap.style.display='block';
-  imagePreview.style.display='none';
-  videoPreview.style.display='none';
-  videoPreview.pause();
-  videoPreview.removeAttribute('src');
-  imagePreview.removeAttribute('src');
-
-  if(f.type.startsWith('video/')){
-    videoPreview.src=objectUrl;
-    videoPreview.style.display='block';
-    st.textContent='Video hazır';
-  }else{
-    imagePreview.src=objectUrl;
-    imagePreview.style.display='block';
-    st.textContent='Görsel hazır';
-  }
-  fileInfo.textContent=f.name;
-  dot.classList.add('ok');
-  results.style.display='none';
-};
-
-document.getElementById('analyze').onclick=()=>{
-  if(!file.files.length){st.textContent='Önce bir ölçüm dosyası seç';return;}
-  st.textContent='Demo analiz tamamlandı';
-  results.style.display='block';
-  setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),60);
-};
-
-function resetApp(){
-  file.value='';
-  if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null;}
-  previewWrap.style.display='none';
-  imagePreview.style.display='none';
-  videoPreview.style.display='none';
-  results.style.display='none';
-  fileInfo.textContent='';
-  st.textContent='Ölçüm dosyası bekleniyor';
-  dot.classList.remove('ok');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+const file=document.getElementById('file'), imagePreview=document.getElementById('imagePreview'), videoPreview=document.getElementById('videoPreview'), previewWrap=document.getElementById('previewWrap'), fileInfo=document.getElementById('fileInfo'), results=document.getElementById('results'), st=document.getElementById('st'), dot=document.getElementById('dot'), canvas=document.getElementById('work'), ctx=canvas.getContext('2d',{willReadFrequently:true});let objectUrl=null;
+file.onchange=e=>{const f=e.target.files&&e.target.files[0];if(!f)return;if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(f);previewWrap.style.display='block';imagePreview.style.display='none';videoPreview.style.display='none';videoPreview.pause();videoPreview.removeAttribute('src');imagePreview.removeAttribute('src');if(f.type.startsWith('video/')){videoPreview.src=objectUrl;videoPreview.style.display='block';st.textContent='Video hazır — analiz için istediğin karede durdur';}else{imagePreview.src=objectUrl;imagePreview.style.display='block';st.textContent='Görsel hazır';}fileInfo.textContent=f.name;dot.classList.add('ok');results.style.display='none';};
+function median(a){const b=[...a].sort((x,y)=>x-y),m=Math.floor(b.length/2);return b.length?(b.length%2?b[m]:(b[m-1]+b[m])/2):0}function mean(a){return a.length?a.reduce((s,v)=>s+v,0)/a.length:0}function clamp(v,a,b){return Math.max(a,Math.min(b,v))}function freqAt(t){return 20*Math.pow(1000,t)}function fmtFreq(f){return f>=1000?(f/1000).toFixed(f>=10000?1:2).replace(/\.00$/,'')+' kHz':Math.round(f)+' Hz'}
+function smooth(a,r=5){return a.map((_,i)=>{let s=0,n=0;for(let j=Math.max(0,i-r);j<=Math.min(a.length-1,i+r);j++){s+=a[j];n++}return s/n})}
+function band(curve,f1,f2){const vals=[];curve.forEach((v,i)=>{const f=freqAt(i/(curve.length-1));if(f>=f1&&f<=f2)vals.push(v)});return mean(vals)}
+function extractCurve(source){const sw=source.videoWidth||source.naturalWidth,sh=source.videoHeight||source.naturalHeight;if(!sw||!sh)throw new Error('Görsel boyutu okunamadı');const maxW=720,scale=Math.min(1,maxW/sw),w=Math.max(240,Math.round(sw*scale)),h=Math.max(180,Math.round(sh*scale));canvas.width=w;canvas.height=h;ctx.drawImage(source,0,0,w,h);const im=ctx.getImageData(0,0,w,h),d=im.data;const x0=Math.floor(w*.06),x1=Math.floor(w*.97),y0=Math.floor(h*.08),y1=Math.floor(h*.90);const raw=[],quality=[];for(let x=x0;x<x1;x+=2){let bestY=(y0+y1)/2,best=-1,second=-1;for(let y=y0+1;y<y1-1;y+=2){const k=(y*w+x)*4,r=d[k],g=d[k+1],b=d[k+2],mx=Math.max(r,g,b),mn=Math.min(r,g,b),sat=(mx-mn)/Math.max(1,mx),lum=(r+g+b)/765;const ku=((y-2)*w+x)*4,kd=((y+2)*w+x)*4,lu=(d[ku]+d[ku+1]+d[ku+2])/3,ld=(d[kd]+d[kd+1]+d[kd+2])/3,edge=Math.abs(ld-lu)/255;const score=sat*.8+edge*.75+lum*.08;if(score>best){second=best;best=score;bestY=y}else if(score>second)second=score}raw.push(1-(bestY-y0)/(y1-y0));quality.push(Math.max(0,best-second))}let c=smooth(raw,4);const med=median(c);c=c.map(v=>clamp(v-med+.5,0,1));return {curve:smooth(c,3),coverage:clamp(mean(quality)*7,0,1),w,h}}
+function analyzeCurve(curve,coverage){const speech=band(curve,160,5000),low=band(curve,35,100),mud=band(curve,180,500),clar=band(curve,2000,5000),presence=band(curve,1000,4000);const deviations=curve.map(v=>v-speech),maxDev=Math.max(...deviations),variance=Math.sqrt(mean(deviations.map(v=>v*v)));let hpf=low>speech+.10?'120 Hz':low>speech+.04?'100 Hz':'80 Hz';let mudText=mud>presence+.10?'Fazla':mud>presence+.04?'Biraz fazla':'Normal';let clarityText=clar<speech-.09?'Düşük':clar<speech-.03?'Biraz düşük':'İyi';let risk=maxDev>.20?'Yüksek':maxDev>.12?'Orta':'Düşük';let profile=(mudText==='Normal'&&clarityText==='İyi'&&risk!=='Yüksek')?'İyi':(risk==='Yüksek'||clarityText==='Düşük')?'Düzeltme gerekli':'Orta';const peaks=[];for(let i=3;i<curve.length-3;i++){const f=freqAt(i/(curve.length-1));if(f<120||f>10000)continue;const local=(curve[i-3]+curve[i-2]+curve[i-1]+curve[i+1]+curve[i+2]+curve[i+3])/6,dev=curve[i]-Math.max(speech,local);if(dev>.055&&curve[i]>=curve[i-1]&&curve[i]>=curve[i+1])peaks.push({i,f,dev})}peaks.sort((a,b)=>b.dev-a.dev);const selected=[];for(const p of peaks){if(selected.every(s=>Math.abs(Math.log2(p.f/s.f))>.28)){let left=p.i,right=p.i,thr=curve[p.i]-p.dev*.45;while(left>1&&curve[left]>thr)left--;while(right<curve.length-2&&curve[right]>thr)right++;const oct=Math.max(.18,Math.log2(freqAt(right/(curve.length-1))/freqAt(left/(curve.length-1))));selected.push({f:p.f,g:-clamp(1+p.dev*18,1.2,4.5),q:clamp(1.4/oct,.7,5.0)});if(selected.length===4)break}}const conf=clamp(.35+coverage*.45+Math.min(.2,variance),0,1);return {hpf,mudText,clarityText,risk,profile,eq:selected,conf,maxDev,variance}}
+function render(a){document.getElementById('profile').textContent=a.profile;const cf=a.conf>.72?'YÜKSEK':a.conf>.5?'ORTA':'DÜŞÜK';document.getElementById('confidence').textContent='GÜVEN '+cf;document.getElementById('hpf').textContent=a.hpf;const fb=document.getElementById('feedback');fb.textContent=a.risk;fb.className=a.risk==='Yüksek'?'bad':a.risk==='Orta'?'warn':'good';const md=document.getElementById('mud');md.textContent=a.mudText;md.className=a.mudText==='Fazla'?'bad':a.mudText==='Biraz fazla'?'warn':'good';const cl=document.getElementById('clarity');cl.textContent=a.clarityText;cl.className=a.clarityText==='Düşük'?'bad':a.clarityText==='Biraz düşük'?'warn':'good';const t=document.getElementById('eqTable');t.innerHTML='<div class="row head"><div>Frekans</div><div>Kazanç</div><div>Q</div></div>';if(!a.eq.length)t.innerHTML+='<div class="row"><div>Belirgin tepe yok</div><div>—</div><div>—</div></div>';else a.eq.forEach(e=>t.innerHTML+=`<div class="row"><div>${fmtFreq(e.f)}</div><div>${e.g.toFixed(1)} dB</div><div>${e.q.toFixed(2)}</div></div>`);document.getElementById('note').innerHTML='<b>Gerçek göreli analiz:</b> Sonuçlar seçilen RTA görüntüsündeki eğrinin şekline göre hesaplandı. Ekran görüntüsünde dB ekseni kalibre edilmediği için mutlak SPL/dB ölçümü yapılmaz; EQ önerileri göreli tepe kesimleridir. Düşük güven görünürse grafiği daha büyük ve net bir ekran görüntüsüyle tekrar dene.';results.style.display='block';st.textContent='Gerçek göreli RTA analizi tamamlandı';setTimeout(()=>results.scrollIntoView({behavior:'smooth',block:'start'}),60)}
+async function runAnalysis(){if(!file.files.length){st.textContent='Önce bir ölçüm dosyası seç';return}st.textContent='RTA eğrisi okunuyor…';try{let src;if(file.files[0].type.startsWith('video/')){if(videoPreview.readyState<2)throw new Error('Video karesi henüz hazır değil');videoPreview.pause();src=videoPreview}else{if(!imagePreview.complete)await new Promise((res,rej)=>{imagePreview.onload=res;imagePreview.onerror=rej});src=imagePreview}const {curve,coverage}=extractCurve(src);render(analyzeCurve(curve,coverage))}catch(err){st.textContent='Analiz yapılamadı: '+(err.message||'görsel okunamadı');}}
+document.getElementById('analyze').onclick=runAnalysis;
+function resetApp(){file.value='';if(objectUrl){URL.revokeObjectURL(objectUrl);objectUrl=null}previewWrap.style.display='none';imagePreview.style.display='none';videoPreview.style.display='none';results.style.display='none';fileInfo.textContent='';st.textContent='Ölçüm dosyası bekleniyor';dot.classList.remove('ok');window.scrollTo({top:0,behavior:'smooth'})}
 </script>
-</body>
-</html>
+</body></html>
