@@ -32,11 +32,15 @@ public class MainActivity extends Activity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+
+                // Metinleri DOM'u yeniden oluşturmadan değiştiriyoruz.
+                // Böylece input/change/click event listener'ları kaybolmuyor.
                 String js = "(function(){" +
-                        "document.body.innerHTML=document.body.innerHTML" +
-                        ".replace(/Xilica EQ analizi/g,'parametrik EQ analizi')" +
+                        "var w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);" +
+                        "var n;while(n=w.nextNode()){if(n.nodeValue&&n.nodeValue.indexOf('Xilica')!==-1){" +
+                        "n.nodeValue=n.nodeValue.replace(/Xilica EQ analizi/g,'parametrik EQ analizi')" +
                         ".replace(/Önerilen Xilica EQ/g,'Önerilen Parametrik EQ')" +
-                        ".replace(/Xilica/g,'');" +
+                        ".replace(/Xilica/g,'');}}" +
                         "})();";
                 view.evaluateJavascript(js, null);
             }
@@ -45,15 +49,17 @@ public class MainActivity extends Activity {
         web.setWebChromeClient(new WebChromeClient() {
             @Override
             public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> callback, FileChooserParams params) {
-                if (filePathCallback != null) filePathCallback.onReceiveValue(null);
+                if (filePathCallback != null) {
+                    filePathCallback.onReceiveValue(null);
+                }
                 filePathCallback = callback;
 
                 try {
-                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
                     intent.setType("*/*");
                     intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
-                    startActivityForResult(intent, FILE_CHOOSER_REQUEST);
+                    startActivityForResult(Intent.createChooser(intent, "Fotoğraf veya video seç"), FILE_CHOOSER_REQUEST);
                     return true;
                 } catch (ActivityNotFoundException e) {
                     filePathCallback = null;
@@ -68,11 +74,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode != FILE_CHOOSER_REQUEST || filePathCallback == null) return;
+
+        if (requestCode != FILE_CHOOSER_REQUEST || filePathCallback == null) {
+            return;
+        }
 
         Uri[] results = null;
-        if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-            results = new Uri[]{data.getData()};
+        if (resultCode == Activity.RESULT_OK) {
+            results = WebChromeClient.FileChooserParams.parseResult(resultCode, data);
         }
 
         filePathCallback.onReceiveValue(results);
