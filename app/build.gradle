@@ -1,0 +1,15 @@
+plugins {
+    id 'com.android.application'
+}
+android {
+    namespace 'com.hybride.audioanalyzer'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "com.hybride.audioanalyzer"
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName "0.1"
+    }
+}
