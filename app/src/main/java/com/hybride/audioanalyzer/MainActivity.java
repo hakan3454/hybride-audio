@@ -29,24 +29,19 @@ public class MainActivity extends Activity {
 
         web.setWebChromeClient(new WebChromeClient() {
             @Override
-            public boolean onShowFileChooser(
-                    WebView webView,
-                    ValueCallback<Uri[]> filePathCallback,
-                    FileChooserParams fileChooserParams) {
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> callback, FileChooserParams params) {
+                if (filePathCallback != null) filePathCallback.onReceiveValue(null);
+                filePathCallback = callback;
 
-                if (MainActivity.this.filePathCallback != null) {
-                    MainActivity.this.filePathCallback.onReceiveValue(null);
-                }
-                MainActivity.this.filePathCallback = filePathCallback;
-
-                Intent intent;
                 try {
-                    intent = fileChooserParams.createIntent();
-                    intent.setType("image/*");
+                    Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    intent.setType("*/*");
+                    intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{"image/*", "video/*"});
                     startActivityForResult(intent, FILE_CHOOSER_REQUEST);
                     return true;
                 } catch (ActivityNotFoundException e) {
-                    MainActivity.this.filePathCallback = null;
+                    filePathCallback = null;
                     return false;
                 }
             }
@@ -58,17 +53,11 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode != FILE_CHOOSER_REQUEST || filePathCallback == null) {
-            return;
-        }
+        if (requestCode != FILE_CHOOSER_REQUEST || filePathCallback == null) return;
 
         Uri[] results = null;
-        if (resultCode == Activity.RESULT_OK && data != null) {
-            Uri uri = data.getData();
-            if (uri != null) {
-                results = new Uri[]{uri};
-            }
+        if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            results = new Uri[]{data.getData()};
         }
 
         filePathCallback.onReceiveValue(results);
